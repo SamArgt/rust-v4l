@@ -7,7 +7,7 @@ use v4l::prelude::*;
 use v4l::video::Capture;
 
 fn main() -> io::Result<()> {
-    let path = "/dev/vide40";
+    let path = "/dev/video40";
     println!("Using device: {}\n", path);
 
     // Capture 4 frames by default
