@@ -23,7 +23,7 @@ fn main() -> io::Result<()> {
     println!("Active parameters:\n{}", params);
 
     // Setup a buffer stream and grab a frame, then print its data
-    let mut stream = UserptrStream::with_buffers(&dev, Type::VideoOutput, buffer_count).expect(
+    let mut stream = UserptrStream::with_buffers(&dev, Type::VideoCapture, buffer_count).expect(
         "Failed to create buffer stream",
     );
 
