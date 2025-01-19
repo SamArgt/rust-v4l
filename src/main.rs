@@ -55,8 +55,8 @@ fn main() -> io::Result<()> {
         println!("  length    : {}", buf.len());
 
         // save buffer as png
-        let width = format.width();
-        let height = format.height();
+        let width = format.width;
+        let height = format.height;
         let buffer = ImageBuffer::<Rgb<u8>, _>::from_raw(width, height, &buf[..])
             .expect("Failed to create image buffer");
 
