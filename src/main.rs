@@ -5,6 +5,7 @@ use v4l::buffer::Type;
 use v4l::io::traits::CaptureStream;
 use v4l::prelude::*;
 use v4l::video::Capture;
+use image::{ImageBuffer, Rgb};
 
 fn main() -> io::Result<()> {
     let path = "/dev/video40";
@@ -52,6 +53,15 @@ fn main() -> io::Result<()> {
         println!("  timestamp : {}", meta.timestamp);
         println!("  flags     : {}", meta.flags);
         println!("  length    : {}", buf.len());
+
+        // save buffer as png
+        let width = format.width();
+        let height = format.height();
+        let buffer = ImageBuffer::<Rgb<u8>, _>::from_raw(width, height, &buf[..])
+            .expect("Failed to create image buffer");
+
+        buffer.save(format!("frame-{}.png", i))
+            .expect("Failed to save image");
     }
 
     println!();
