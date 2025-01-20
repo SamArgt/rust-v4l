@@ -1,7 +1,6 @@
 use std::io;
 use std::time::Instant;
 
-use image::{ImageBuffer, Rgb};
 use v4l::buffer::Type;
 use v4l::io::traits::CaptureStream;
 use v4l::prelude::*;
