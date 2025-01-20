@@ -66,7 +66,7 @@ fn main() -> io::Result<()> {
             &new_container[..],
             width,
             height,
-            Rgb,
+            image::ExtendedColorType::Rgb8,
         )
         .unwrap()
     }
