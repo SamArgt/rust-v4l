@@ -61,7 +61,7 @@ fn main() -> io::Result<()> {
         // image_buffer.save(format!("frame-{}.png", i))
         //     .expect("Failed to save image");
         image::save_buffer(
-            format!("frame-{}.png", i),
+            format!("frame-{}.jpeg", i),
             &new_container[..],
             width,
             height,
