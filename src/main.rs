@@ -57,7 +57,8 @@ fn main() -> io::Result<()> {
         // save buffer as png
         let width = format.width;
         let height = format.height;
-        let image_buffer = ImageBuffer::<Rgb<u8>, _>::from_raw(width, height, buf)
+        let newContainer = Vec::from(buf);
+        let image_buffer = ImageBuffer::<Rgb<u8>, _>::from_raw(width, height, newContainer)
             .unwrap();
         image_buffer.save(format!("frame-{}.png", i))
             .expect("Failed to save image");
