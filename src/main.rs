@@ -1,11 +1,11 @@
 use std::io;
 use std::time::Instant;
 
+use image::{ImageBuffer, Rgb};
 use v4l::buffer::Type;
 use v4l::io::traits::CaptureStream;
 use v4l::prelude::*;
 use v4l::video::Capture;
-use image::{ImageBuffer, Rgb};
 
 fn main() -> io::Result<()> {
     let path = "/dev/video40";
@@ -24,9 +24,8 @@ fn main() -> io::Result<()> {
     println!("Active parameters:\n{}", params);
 
     // Setup a buffer stream and grab a frame, then print its data
-    let mut stream = MmapStream::with_buffers(&dev, Type::VideoCapture, buffer_count).expect(
-        "Failed to create buffer stream",
-    );
+    let mut stream = MmapStream::with_buffers(&dev, Type::VideoCapture, buffer_count)
+        .expect("Failed to create buffer stream");
 
     // warmup
     stream.next().expect("Fail to warmup");
@@ -56,12 +55,20 @@ fn main() -> io::Result<()> {
 
         // save buffer as png
         let width = format.width;
-        let height = format.height;
-        let newContainer = Vec::from(buf);
-        let image_buffer = ImageBuffer::<Rgb<u8>, _>::from_raw(width, height, newContainer)
-            .unwrap();
-        image_buffer.save(format!("frame-{}.png", i))
-            .expect("Failed to save image");
+        let height: u32 = format.height;
+        let new_container = Vec::from(buf);
+        // let image_buffer = ImageBuffer::<Rgb<u8>, _>::from_raw(width, height, newContainer)
+        //     .unwrap();
+        // image_buffer.save(format!("frame-{}.png", i))
+        //     .expect("Failed to save image");
+        image::save_buffer(
+            format!("frame-{}.png"),
+            &new_container[..],
+            width,
+            height,
+            Rgb,
+        )
+        .unwrap()
     }
 
     println!();
